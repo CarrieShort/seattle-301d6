@@ -70,13 +70,25 @@
     .reduce(function(a, b) {
       console.log('every sum', a+b)
       return a+b;
-    })
+    });
   };
 
   // TODO: Chain together a `map` and a `reduce` call to produce an array of unique author names.
   Article.allAuthors = function() {
-    return       // Don't forget to read the docs on map and reduce! You can reference the previous
-      return     // `map` in the numWordsAll method to get you started here.
+    return Article.all.map(function(article){
+      return article.author;
+    })
+    .reduce(function(a,b){
+      // a.find(function(){
+      //
+      // })
+      if(jQuery.inArray(b, a) === -1){
+        a.push(b);
+      }
+      return a;
+    },[]);
+     // Don't forget to read the docs on map and reduce! You can reference the previous
+       // `map` in the numWordsAll method to get you started here.
 
       // For our `reduce` -- since we are trying to return an array, we'll need to specify an accumulator type...
       // what data type should this accumulator be and where is it placed?
@@ -88,7 +100,16 @@
     // written by the specified author.
     return Article.allAuthors().map(function(author) {
       return {
-        // name:
+        name: author,
+        numWords: Article.all.filter(function(x){
+          return x.author === author;
+        })
+        .map(function(x){
+          return x.body.split(' ').length;
+        })
+        .reduce(function(a, b) {
+          return a+b;
+        })
         // numWords: someCollection.someArrayMethod().map(...).reduce(...), ...
       };
     });
