@@ -115,7 +115,9 @@
 
   articleView.initAdminPage = function() {
     // TODO: Call the Handlebars `.compile` function, which will return a function for you to use where needed.
-    var template; // = ...?
+    var template = Handlebars.compile($('#author-template').text());
+    console.log(template);
+
 
     // DONE: We use `forEach` here because we are relying on the side-effects of the callback function:
     // appending to the DOM.
@@ -127,6 +129,8 @@
     // DONE: Simply write the correct values to the page:
     $('#blog-stats .articles').text(Article.all.length);
     $('#blog-stats .words').text(Article.numWordsAll());
+
+    return template(this);
   };
   // exposing articleView to the window, can access all properties and methods
   module.articleView = articleView;
