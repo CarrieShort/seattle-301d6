@@ -46,15 +46,17 @@
   // to execute once the loading of articles is done. We do this because we might want
   // to call other view functions, and not just the initIndexPage() that we are replacing.
   // Now, instead of calling articleView.initIndexPage(), we can simply run our callback.
-  Article.fetchAll = function(placeholder) {
+  Article.fetchAll = function(callback) {
     if (localStorage.rawData) {
       Article.loadAll(JSON.parse(localStorage.rawData));
-      articleView.initIndexPage();
+      // articleView.initIndexPage();
+      callback();
     } else {
       $.getJSON('/data/hackerIpsum.json', function(rawData) {
         Article.loadAll(rawData);
         localStorage.rawData = JSON.stringify(rawData); // Cache the json, so we don't need to request it next time.
-        articleView.initIndexPage();
+        // articleView.initIndexPage();
+        callback();
       });
     }
   };
